@@ -2,7 +2,7 @@ import React from "react";
 
 const SearchResults = ({ results }) => {
   return (
-    <ul className="absolute top-12 border-2 w-full rounded-md h-64 overflow-y-scroll bg-white border-neutral-500">
+    <ul className="absolute top-12 border-2 w-full rounded-md h-64 overflow-y-scroll bg-white border-neutral-500 custom-scrollbar">
       {results.map((item) => {
         return (
           <li
