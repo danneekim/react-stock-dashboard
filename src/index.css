@@ -16,4 +16,8 @@
     width: 5px;
     border-radius: 10px;
   }
+
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+    background-color: #312e81;
+  }
 }
