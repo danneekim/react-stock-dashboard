@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { mockSearchResults } from "../constants/mock";
 import { XIcon, SearchIcon } from "@heroicons/react/solid";
 import SearchResults from "./SearchResults";
+import ThemeIcon from "./ThemeIcon";
 
 const Search = () => {
   const [input, setInput] = useState("");
@@ -17,38 +18,41 @@ const Search = () => {
   };
 
   return (
-    <div className="flex items-center my-4 border-2 rounded-md ring-black ring-1 relative z-50 w-96">
-      <input
-        type="text"
-        value={input}
-        className="w-full px-4 py-2 focus:outline-none rounded-md"
-        placeholder="Search a ticker..."
-        onChange={(event) => {
-          setInput(event.target.value);
-        }}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            updateBestMatches();
-          }
-        }}
-      />
-      {/* Clear */}
-      {input && (
-        <button onClick={clear} className="m-1">
-          <XIcon className="h-4 w-4 fill-gray-500" />
+    <div className="flex items-center">
+      <div className="flex items-center my-4 border-1 rounded-md relative z-50 w-96">
+        <input
+          type="text"
+          value={input}
+          className="w-full px-4 py-2 focus:outline-none rounded-md"
+          placeholder="Search a ticker..."
+          onChange={(event) => {
+            setInput(event.target.value);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              updateBestMatches();
+            }
+          }}
+        />
+        {/* Clear */}
+        {input && (
+          <button onClick={clear} className="m-1">
+            <XIcon className="h-4 w-4 fill-gray-500" />
+          </button>
+        )}
+        {/* Search */}
+        <button
+          onClick={updateBestMatches}
+          className="h-8 w-8 bg-indigo-600 rounded-md flex justify-center items-center m-1 p-2"
+        >
+          <SearchIcon className="h-4 w-4 fill-gray-100" />
         </button>
-      )}
-      {/* Search */}
-      <button
-        onClick={updateBestMatches}
-        className="h-8 w-8 bg-indigo-600 rounded-md flex justify-center items-center m-1 p-2"
-      >
-        <SearchIcon className="h-4 w-4 fill-gray-100" />
-      </button>
-      {/* Search Results */}
-      {input && bestMatch.length > 0 ? (
-        <SearchResults results={bestMatch} />
-      ) : null}
+        {/* Search Results */}
+        {input && bestMatch.length > 0 ? (
+          <SearchResults results={bestMatch} />
+        ) : null}
+      </div>
+      <ThemeIcon></ThemeIcon>
     </div>
   );
 };
