@@ -25,7 +25,7 @@ const Details = ({ details }) => {
               <span>{detailsList[item]}</span>
               <span>
                 {item === "marketCapitalization"
-                  ? `${convertMillionToBillion(details[item])}B`
+                  ? `${convertMillionToBillion(details[item])} B`
                   : details[item]}
               </span>
             </li>
