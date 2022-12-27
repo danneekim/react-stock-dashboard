@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Card from "./Card";
+import ChartFilter from "./ChartFilter";
 import { mockHistoricalData } from "../constants/mock";
 import { convertUnixTimeStampToDate } from "../helpers/date-helper";
 import {
@@ -10,6 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { chartConfig } from "../constants/config";
 
 const Chart = () => {
   const [data, setDate] = useState(mockHistoricalData);
@@ -26,6 +28,21 @@ const Chart = () => {
 
   return (
     <Card>
+      <ul className="flex absolute top-2 right-2 z-50">
+        {Object.keys(chartConfig).map((item) => {
+          return (
+            <li key={item}>
+              <ChartFilter
+                text={item}
+                active={filter === item}
+                onClick={() => {
+                  setFilter(item);
+                }}
+              ></ChartFilter>
+            </li>
+          );
+        })}
+      </ul>
       <ResponsiveContainer>
         <AreaChart data={formatData(data)}>
           <defs>
