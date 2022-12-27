@@ -28,12 +28,23 @@ const Chart = () => {
     <Card>
       <ResponsiveContainer>
         <AreaChart data={formatData(data)}>
+          <defs>
+            <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor="rgb(199,210,254)"
+                stopOpacity={0.8}
+              />
+              <stop offset="95%" stopColor="rgb(199,210,254)" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <Area
             dataKey="value"
             type="monotone"
             stroke="#312e81"
             strokeWidth={0.5}
             fillOpacity={1}
+            fill="url(#chartColor)"
           />
           <Tooltip />
           <XAxis dataKey={"date"} />
