@@ -5,13 +5,14 @@ import Overview from "./Overview";
 import Chart from "./Chart";
 import ThemeContext from "../context/ThemeContext";
 import StockContext from "../context/StockContext";
-import { fetchStockDetails } from "../api/stock-api";
+import { fetchStockDetails, fetchStockQuote } from "../api/stock-api";
 
 const Dashboard = () => {
   const { darkMode } = useContext(ThemeContext);
   const { stockSymbol } = useContext(StockContext);
 
   const [stockDetails, setStockDetails] = useState({});
+  const [stockQuote, setStockQuote] = useState({});
 
   useEffect(() => {
     const updateStockDetails = async () => {
@@ -24,7 +25,20 @@ const Dashboard = () => {
         console.log(err);
       }
     };
+
+    const updateStockQuote = async () => {
+      try {
+        const result = await fetchStockQuote(stockSymbol);
+        console.log("quote: ", result);
+        setStockQuote(result);
+      } catch (err) {
+        setStockQuote({});
+        console.log(err);
+      }
+    };
+
     updateStockDetails();
+    updateStockQuote();
   }, [stockSymbol]);
 
   return (
@@ -44,10 +58,10 @@ const Dashboard = () => {
       <div>
         <Overview
           symbol={stockDetails.ticker}
-          price={300}
-          change={30}
-          changePercent={10.0}
-          currency={"USD"}
+          price={stockQuote.pc}
+          change={stockQuote.d}
+          changePercent={stockQuote.dp}
+          currency={stockDetails.currency}
         ></Overview>
       </div>
       <div className="row-span-2 xl:row-span-3">
