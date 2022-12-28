@@ -11,7 +11,7 @@ const ThemeIcon = () => {
   return (
     <button
       className={`rounded-lg border-1 p-2 shadow-lg absolute right-10 ${
-        darkMode ? "shadow-gray-100" : null
+        darkMode ? "shadow-gray-800 border-indigo-300" : null
       }`}
       onClick={toggleDarkMode}
     >

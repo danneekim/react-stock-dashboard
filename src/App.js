@@ -5,6 +5,7 @@ import ThemeContext from "./context/ThemeContext";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+
   return (
     <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
       <Dashboard></Dashboard>;
