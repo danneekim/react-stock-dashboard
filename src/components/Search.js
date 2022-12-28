@@ -21,14 +21,15 @@ const Search = () => {
     try {
       if (input) {
         const searchResults = await searchStockSymbols(input);
-        const result = searchResults.result;
+        const result = searchResults.result.filter(
+          (item) => !item.symbol.includes(".")
+        );
         setBestMatches(result);
       }
     } catch (err) {
       setBestMatches([]);
       console.log(err);
     }
-    // setBestMatches(mockSearchResults.result);
   };
 
   return (
