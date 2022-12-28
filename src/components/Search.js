@@ -22,7 +22,7 @@ const Search = () => {
       if (input) {
         const searchResults = await searchStockSymbols(input);
         const result = searchResults.result.filter(
-          (item) => !item.symbol.includes(".")
+          (item) => !item.symbol.includes(".") && item.type === "Common Stock"
         );
         setBestMatches(result);
       }
