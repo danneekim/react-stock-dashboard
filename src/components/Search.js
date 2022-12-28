@@ -1,23 +1,34 @@
 import React, { useContext, useState } from "react";
-import { mockSearchResults } from "../constants/mock";
+// import { mockSearchResults } from "../constants/mock";
 import { XIcon, SearchIcon } from "@heroicons/react/solid";
 import SearchResults from "./SearchResults";
 import ThemeIcon from "./ThemeIcon";
 import ThemeContext from "../context/ThemeContext";
+import { searchStockSymbols } from "../api/stock-api";
 
 const Search = () => {
   const { darkMode } = useContext(ThemeContext);
 
   const [input, setInput] = useState("");
-  const [bestMatch, setBestMatches] = useState(mockSearchResults.result);
+  const [bestMatch, setBestMatches] = useState([]);
 
   const clear = () => {
     setInput("");
     setBestMatches([]);
   };
 
-  const updateBestMatches = () => {
-    setBestMatches(mockSearchResults.result);
+  const updateBestMatches = async () => {
+    try {
+      if (input) {
+        const searchResults = await searchStockSymbols(input);
+        const result = searchResults.result;
+        setBestMatches(result);
+      }
+    } catch (err) {
+      setBestMatches([]);
+      console.log(err);
+    }
+    // setBestMatches(mockSearchResults.result);
   };
 
   return (
