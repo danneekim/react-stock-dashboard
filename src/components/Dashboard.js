@@ -1,13 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./Header";
 import Details from "./Details";
-import { mockCompanyDetails } from "../constants/mock";
 import Overview from "./Overview";
 import Chart from "./Chart";
 import ThemeContext from "../context/ThemeContext";
+import StockContext from "../context/StockContext";
+import { fetchStockDetails } from "../api/stock-api";
 
 const Dashboard = () => {
   const { darkMode } = useContext(ThemeContext);
+  const { stockSymbol } = useContext(StockContext);
+
+  const [stockDetails, setStockDetails] = useState({});
+
+  useEffect(() => {
+    const updateStockDetails = async () => {
+      try {
+        const result = await fetchStockDetails(stockSymbol);
+        console.log("details: ", result);
+        setStockDetails(result);
+      } catch (err) {
+        setStockDetails({});
+        console.log(err);
+      }
+    };
+    updateStockDetails();
+  }, [stockSymbol]);
 
   return (
     <div
@@ -18,14 +36,14 @@ const Dashboard = () => {
       }`}
     >
       <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start items-center">
-        <Header name={mockCompanyDetails.name}></Header>
+        <Header name={stockDetails.name}></Header>
       </div>
       <div className="md:col-span-2 row-span-4">
         <Chart></Chart>
       </div>
       <div>
         <Overview
-          symbol={mockCompanyDetails.ticker}
+          symbol={stockDetails.ticker}
           price={300}
           change={30}
           changePercent={10.0}
@@ -33,7 +51,7 @@ const Dashboard = () => {
         ></Overview>
       </div>
       <div className="row-span-2 xl:row-span-3">
-        <Details details={mockCompanyDetails} />
+        <Details details={stockDetails} />
       </div>
     </div>
   );
