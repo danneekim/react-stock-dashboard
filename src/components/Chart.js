@@ -20,7 +20,7 @@ import ThemeContext from "../context/ThemeContext";
 import StockContext from "../context/StockContext";
 
 const Chart = () => {
-  const [data, setDate] = useState(mockHistoricalData);
+  const [chartData, setChartData] = useState(mockHistoricalData);
   const [filter, setFilter] = useState("1W");
 
   const { darkMode } = useContext(ThemeContext);
@@ -45,10 +45,10 @@ const Chart = () => {
   }, [stockSymbol, filter]);
 
   const formatData = () => {
-    return data.c.map((item, index) => {
+    return chartData.c.map((item, index) => {
       return {
         value: item.toFixed(2),
-        date: convertUnixTimeStampToDate(data.t[index]),
+        date: convertUnixTimeStampToDate(chartData.t[index]),
       };
     });
   };
@@ -71,7 +71,7 @@ const Chart = () => {
         })}
       </ul>
       <ResponsiveContainer>
-        <AreaChart data={formatData(data)}>
+        <AreaChart data={formatData(chartData)}>
           <defs>
             <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
               <stop
