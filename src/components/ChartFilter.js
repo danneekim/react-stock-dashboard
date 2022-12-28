@@ -8,7 +8,7 @@ const ChartFilter = ({ text, active, onClick }) => {
         active
           ? "bg-indigo-600 border-indigo-600 text-gray-100"
           : "border-indigo-300 text-indigo-300"
-      }`}
+      } transition duration-300 hover:bg-indigo-600 `}
     >
       {text}
     </button>

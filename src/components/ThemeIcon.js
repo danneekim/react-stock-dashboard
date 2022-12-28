@@ -12,7 +12,7 @@ const ThemeIcon = () => {
     <button
       className={`rounded-lg border-1 p-2 shadow-lg absolute right-10 ${
         darkMode ? "shadow-gray-800 border-indigo-300" : null
-      }`}
+      } transition duration-300 hover:scale-110 hover:ring-2 ring-indigo-400`}
       onClick={toggleDarkMode}
     >
       <MoonIcon
