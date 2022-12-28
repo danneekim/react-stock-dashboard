@@ -38,3 +38,16 @@ export const fetchStockQuote = async (stockSymbol) => {
 
   return await response.json();
 };
+
+export const fetchChartData = async (stockSymbol, resolution, from, to) => {
+  // https://finnhub.io/docs/api/stock-candles
+  const url = `${basePath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    const message = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  console.log("fetchStockCandles: " + response);
+  return await response.json();
+};

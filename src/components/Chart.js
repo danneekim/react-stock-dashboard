@@ -18,13 +18,23 @@ import {
 import { chartConfig } from "../constants/config";
 import ThemeContext from "../context/ThemeContext";
 import StockContext from "../context/StockContext";
+import { fetchChartData } from "../api/stock-api";
 
 const Chart = () => {
-  const [chartData, setChartData] = useState(mockHistoricalData);
-  const [filter, setFilter] = useState("1W");
-
   const { darkMode } = useContext(ThemeContext);
   const { stockSymbol } = useContext(StockContext);
+
+  const [chartData, setChartData] = useState([]);
+  const [filter, setFilter] = useState("1W");
+
+  const formatData = (data) => {
+    return data.c.map((item, index) => {
+      return {
+        value: item.toFixed(2),
+        date: convertUnixTimeStampToDate(data.t[index]),
+      };
+    });
+  };
 
   useEffect(() => {
     const getDateRange = () => {
@@ -36,22 +46,29 @@ const Chart = () => {
 
       const unixStartTimeStamp = convertDateToUnixTimeStamp(startDate);
       const unixEndTimeStamp = convertDateToUnixTimeStamp(endDate);
-      console.log(unixStartTimeStamp, unixEndTimeStamp);
 
-      return [unixStartTimeStamp, unixEndTimeStamp];
+      return { unixStartTimeStamp, unixEndTimeStamp };
     };
 
-    getDateRange();
-  }, [stockSymbol, filter]);
+    const updateChartData = async () => {
+      try {
+        const { unixStartTimeStamp, unixEndTimeStamp } = getDateRange();
+        const resolution = chartConfig[filter].resolution;
+        const result = await fetchChartData(
+          stockSymbol,
+          resolution,
+          unixStartTimeStamp,
+          unixEndTimeStamp
+        );
+        setChartData(formatData(result));
+      } catch (err) {
+        setChartData([]);
+        console.log(err);
+      }
+    };
 
-  const formatData = () => {
-    return chartData.c.map((item, index) => {
-      return {
-        value: item.toFixed(2),
-        date: convertUnixTimeStampToDate(chartData.t[index]),
-      };
-    });
-  };
+    updateChartData();
+  }, [stockSymbol, filter]);
 
   return (
     <Card>
@@ -71,7 +88,7 @@ const Chart = () => {
         })}
       </ul>
       <ResponsiveContainer>
-        <AreaChart data={formatData(chartData)}>
+        <AreaChart data={chartData}>
           <defs>
             <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
               <stop
