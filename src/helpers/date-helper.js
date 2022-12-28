@@ -1,5 +1,5 @@
 export const convertDateToUnixTimeStamp = (date) => {
-  Math.floor(date.getTime() / 1000);
+  return Math.floor(date.getTime() / 1000);
 };
 
 export const convertUnixTimeStampToDate = (unixTimeStamp) => {
@@ -13,4 +13,5 @@ export const createDate = (startDate, days, weeks, months, years) => {
   newDate.setDate(newDate.getDate() + days + 7 * weeks);
   newDate.setMonth(newDate.getMonth() + months);
   newDate.setFullYear(newDate.getFullYear() + years);
+  return newDate;
 };
