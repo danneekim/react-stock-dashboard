@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import StockContext from "../context/StockContext";
 import ThemeContext from "../context/ThemeContext";
 
@@ -23,7 +23,7 @@ const SearchResults = ({ results }) => {
             } transition duration-300`}
             onClick={() => {
               setStockSymbol(item.symbol);
-              console.log("selected: ", item);
+              // console.log("selected: ", item);
             }}
           >
             <span>{item.symbol}</span>

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Card from "./Card";
 import ChartFilter from "./ChartFilter";
-import { mockHistoricalData } from "../constants/mock";
 import {
   convertUnixTimeStampToDate,
   convertDateToUnixTimeStamp,
@@ -42,7 +41,7 @@ const Chart = () => {
 
       const endDate = new Date();
       const startDate = createDate(endDate, -days, -weeks, -months, -years);
-      console.log(startDate, "....", endDate);
+      // console.log(startDate, "....", endDate);
 
       const unixStartTimeStamp = convertDateToUnixTimeStamp(startDate);
       const unixEndTimeStamp = convertDateToUnixTimeStamp(endDate);
@@ -63,7 +62,7 @@ const Chart = () => {
         setChartData(formatData(result));
       } catch (err) {
         setChartData([]);
-        console.log(err);
+        console.error(err);
       }
     };
 

@@ -48,6 +48,6 @@ export const fetchChartData = async (stockSymbol, resolution, from, to) => {
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
   }
-  console.log("fetchStockCandles: " + response);
+
   return await response.json();
 };

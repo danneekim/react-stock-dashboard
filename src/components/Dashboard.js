@@ -18,22 +18,22 @@ const Dashboard = () => {
     const updateStockDetails = async () => {
       try {
         const result = await fetchStockDetails(stockSymbol);
-        console.log("details: ", result);
+        // console.log("details: ", result);
         setStockDetails(result);
       } catch (err) {
         setStockDetails({});
-        console.log(err);
+        console.error(err);
       }
     };
 
     const updateStockQuote = async () => {
       try {
         const result = await fetchStockQuote(stockSymbol);
-        console.log("quote: ", result);
+        // console.log("quote: ", result);
         setStockQuote(result);
       } catch (err) {
         setStockQuote({});
-        console.log(err);
+        console.error(err);
       }
     };
 
